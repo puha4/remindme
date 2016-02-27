@@ -1,7 +1,6 @@
 package com.remindme.server.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.postgresql.Driver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.jta.JtaTransactionManager;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -32,7 +30,7 @@ public class DatabaseConfig {
     private Environment env;
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan(env.getRequiredProperty("db.entity.package"));
@@ -62,9 +60,9 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public PlatformTransactionManager platformTransactionManager() {
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager manager = new JpaTransactionManager();
-        manager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+        manager.setEntityManagerFactory(entityManagerFactory().getObject());
 
         return manager;
     }

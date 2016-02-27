@@ -1,6 +1,5 @@
 package com.remindme.server;
 
-
 import com.remindme.server.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -24,4 +23,5 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         servlet.addMapping("/");
         servlet.setLoadOnStartup(1);
     }
+
 }
